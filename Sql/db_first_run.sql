@@ -46,6 +46,7 @@ CREATE TABLE `employees` (
 SET GLOBAL log_bin_trust_function_creators = 1;
 
 DELIMITER $$
+
 -- Create a function to add employee.
 -- The returned value indicates new employee id.
 -- If failed, then return code is negative and:
@@ -105,6 +106,38 @@ BEGIN
     RETURN `employeeId`;
 END$$
 
+-- Create a procedure to add new department.
+DROP PROCEDURE IF EXISTS AddDepartment$$
+CREATE PROCEDURE AddDepartment(
+	IN `newTitle` TINYTEXT,
+
+	OUT `result` INT
+)
+BEGIN
+	IF EXISTS(SELECT `department_id` FROM `departments` WHERE `title` = `newTitle`) THEN
+		SET `result` = 0;
+	ELSE
+		INSERT INTO `departments` (`title`) VALUES (`newTitle`);
+        SET `result` = 1;
+	END IF;
+END$$
+
+-- Create a procedure to add new position.
+DROP PROCEDURE IF EXISTS AddPosition$$
+CREATE PROCEDURE AddPosition(
+	IN `newTitle` TINYTEXT,
+
+	OUT `result` INT
+)
+BEGIN
+	IF EXISTS(SELECT `position_id` FROM `positions` WHERE `title` = `newTitle`) THEN
+		SET `result` = 0;
+	ELSE
+		INSERT INTO `positions` (`title`) VALUES (`newTitle`);
+        SET `result` = 1;
+	END IF;
+END$$
+
 -- Create a procedure to add employee.
 DROP PROCEDURE IF EXISTS AddEmployee$$
 CREATE PROCEDURE AddEmployee(
@@ -148,13 +181,15 @@ END$$
 -- Create a procedure that returns supervisor information for specified department.
 DROP PROCEDURE IF EXISTS GetSupervisorForDepartment$$
 CREATE PROCEDURE GetSupervisorForDepartment(
-	IN `departmentId` INT
+	IN `departmentId` INT,
+
+	OUT `result` INT
 )
 BEGIN
-	SELECT `employees`.`employee_id`, `names`.* FROM `employees`
-    INNER JOIN `names` ON (`employees`.`name_id` = `names`.`name_id`)
+	SELECT `employees`.`employee_id` INTO `result` FROM `employees`
     WHERE
-		`department` = `departmentId` AND ISNULL(`supervisor_id`);
+		`department_id` = `departmentId` AND ISNULL(`supervisor_id`)
+	LIMIT 1;
 END$$
 
 -- Create a procedure that updates employee data.
@@ -174,6 +209,8 @@ CREATE PROCEDURE UpdateEmployee(
 )
 RoutineLabel:
 BEGIN
+	DECLARE `supervisorId` INT;
+
 	-- No such employee - return.
 	IF NOT EXISTS(SELECT `employee_id` FROM `employees` WHERE `employee_id` = `employeeId`) THEN
 		SET `result` = -400;
@@ -189,18 +226,18 @@ BEGIN
 	WHERE
 		`name_id` = (SELECT `name_id` FROM `employees` WHERE `employee_id` = `employeeId`);
 
+	CALL GetSupervisorForDepartment(`newDepartment`, `supervisorId`);
+
 	UPDATE `employees`
     SET
 		`position_id` = `newPosition`,
         `department_id` = `newDepartment`,
-        `supervisor_id` = `supervisorinfo`.`employee_id`	
+        `supervisor_id` = `supervisorId`	
 	WHERE
 		`employee_id` = `employeeId`;
 
 	SET `result` = 1;
 END$$
-
-CALL UpdateEmployee(1, "Bill", "2000-02-02", 1, 123, 1, "USA", @result);
 
 -- Create a procedure that can retrieve all employees.
 -- If no filter is specified, then plain list is returned.

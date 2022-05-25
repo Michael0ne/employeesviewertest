@@ -64,7 +64,7 @@
             this.GroupInfo.Size = new System.Drawing.Size(280, 257);
             this.GroupInfo.TabIndex = 0;
             this.GroupInfo.TabStop = false;
-            this.GroupInfo.Text = "Информация";
+            this.GroupInfo.Text = "Информация о сотруднике";
             // 
             // EditEmployeePostAddress
             // 
@@ -155,7 +155,8 @@
             // 
             // EditEmployeeName
             // 
-            this.EditEmployeeName.Location = new System.Drawing.Point(9, 32);
+            this.EditEmployeeName.Location = new System.Drawing.Point(10, 32);
+            this.EditEmployeeName.MaxLength = 255;
             this.EditEmployeeName.Name = "EditEmployeeName";
             this.EditEmployeeName.Size = new System.Drawing.Size(265, 20);
             this.EditEmployeeName.TabIndex = 1;
@@ -189,6 +190,7 @@
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "EmplAddForm";
+            this.ShowIcon = false;
             this.Text = "Добавить сотрудника";
             this.TopMost = true;
             this.Shown += new System.EventHandler(this.FormShown);

@@ -16,6 +16,8 @@ namespace EmployeesViewer
         public bool ConnectionFailed = false;
 
         static public Int32? AddedEmployeeId;
+        static public Int32? AddedPositionId;
+        static public Int32? AddedDepartmentId;
 
         private readonly string DataBase = "catalog";
         private readonly string UserName = "root";
@@ -34,7 +36,7 @@ namespace EmployeesViewer
             { "supervisor_name", "Начальник" }
         };
 
-        private Dictionary<int, string> PositionsList;
+        private Dictionary<int, string> DepartmentsList;
         private Dictionary<int, string> SupervisorsList;
 
         public EmplViewForm()
@@ -62,6 +64,30 @@ namespace EmployeesViewer
             {
                 DialogResult addFormResult = addForm.ShowDialog();
                 if (addFormResult != DialogResult.OK || !AddedEmployeeId.HasValue)
+                    return;
+
+                RefreshData();
+            }
+        }
+
+        private void AddPositionClicked(object sender, EventArgs e)
+        {
+            using (EmplAddPositionForm addForm = new EmplAddPositionForm())
+            {
+                DialogResult addFormResult = addForm.ShowDialog();
+                if (addFormResult != DialogResult.OK || !AddedPositionId.HasValue)
+                    return;
+
+                RefreshData();
+            }
+        }
+
+        private void AddDepartmentClicked(object sender, EventArgs e)
+        {
+            using (EmplAddDepartmentForm addForm = new EmplAddDepartmentForm())
+            {
+                DialogResult addFormResult = addForm.ShowDialog();
+                if (addFormResult != DialogResult.OK || !AddedDepartmentId.HasValue)
                     return;
 
                 RefreshData();
@@ -98,18 +124,18 @@ namespace EmployeesViewer
             RefreshData();
         }
 
-        private void PropagatePositionsList(Dictionary<int, List<object>> positions)
+        private void PropagateDepartmentsList(Dictionary<int, List<object>> departments)
         {
-            PositionsList = new Dictionary<int, string>();
-            PositionsList.Add(-1, "<не выбрано>");
+            DepartmentsList = new Dictionary<int, string>();
+            DepartmentsList.Add(-1, "<любой>");
 
-            if (positions != null)
+            if (departments != null)
             {
-                foreach (KeyValuePair<int, List<object>> position in positions)
-                    PositionsList.Add((int)position.Value[0], (string)position.Value[1]);
+                foreach (KeyValuePair<int, List<object>> department in departments)
+                    DepartmentsList.Add((int)department.Value[0], (string)department.Value[1]);
             }
 
-            SelectDepartment.DataSource = new BindingSource(PositionsList, null);
+            SelectDepartment.DataSource = new BindingSource(DepartmentsList, null);
             SelectDepartment.DisplayMember = "Value";
             SelectDepartment.ValueMember = "Key";
         }
@@ -117,7 +143,7 @@ namespace EmployeesViewer
         private void PropagateSupervisorsList(Dictionary<int, List<object>> supervisors)
         {
             SupervisorsList = new Dictionary<int, string>();
-            SupervisorsList.Add(-1, "<не выбрано>");
+            SupervisorsList.Add(-1, "<любой>");
 
             if (supervisors != null)
             {
@@ -160,17 +186,14 @@ namespace EmployeesViewer
 
         private void LoadData()
         {
-            DBManager.Request requestPositions = new DBManager.Request("GetPositions");
-            if (!requestPositions.Execute() && requestPositions.GetLastError() != null)
+            DBManager.Request requestDepartments = new DBManager.Request("GetDepartments");
+            if (!requestDepartments.Execute() && requestDepartments.GetLastError() != null)
             {
-                MessageBox.Show("Не удалось получить список должностей! Ошибка:\n" + requestPositions.GetLastError());
+                MessageBox.Show("Не удалось получить список отделов! Ошибка:\n" + requestDepartments.GetLastError());
                 return;
             }
 
-            if (requestPositions.GetResultsRows() == null)
-                MessageBox.Show("Внимание!\nНе найдено ни одной должности.");
-
-            PropagatePositionsList(requestPositions.GetResultsRows());
+            PropagateDepartmentsList(requestDepartments.GetResultsRows());
 
             DBManager.Request requestSupervisors = new DBManager.Request("GetSupervisors");
             if (!requestSupervisors.Execute() && requestSupervisors.GetLastError() != null)
@@ -178,9 +201,6 @@ namespace EmployeesViewer
                 MessageBox.Show("Не удалось получить список руководителей! Ошибка:\n" + requestSupervisors.GetLastError());
                 return;
             }
-
-            if (requestSupervisors.GetResultsRows() == null)
-                MessageBox.Show("Внимание!\nНе найдено ни одного руководителя.");
 
             PropagateSupervisorsList(requestSupervisors.GetResultsRows());
         }
@@ -198,12 +218,14 @@ namespace EmployeesViewer
             }
 
             if (requestEmployees.GetResultsRows() == null)
+            {
                 if (supervisorId != -1)
                     MessageBox.Show("У данного сотрудника нет подчинённых.");
-                else
-                    MessageBox.Show("Внимание!\nНе найдено ни одного сотрудника.");
+            }
             else
+            {
                 PropagateEmployeesList(requestEmployees.GetResultsColumns(), requestEmployees.GetResultsRows());
+            }
         }
 
         private void EmplViewForm_Load(object sender, EventArgs e)

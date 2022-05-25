@@ -90,11 +90,23 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DBManager.cs" />
+    <Compile Include="EmplAddDepartmentForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="EmplAddDepartmentForm.Designer.cs">
+      <DependentUpon>EmplAddDepartmentForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="EmplAddForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="EmplAddForm.Designer.cs">
       <DependentUpon>EmplAddForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="EmplAddPositionForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="EmplAddPositionForm.Designer.cs">
+      <DependentUpon>EmplAddPositionForm.cs</DependentUpon>
     </Compile>
     <Compile Include="EmplViewForm.cs">
       <SubType>Form</SubType>
@@ -104,8 +116,14 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="EmplAddDepartmentForm.resx">
+      <DependentUpon>EmplAddDepartmentForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="EmplAddForm.resx">
       <DependentUpon>EmplAddForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="EmplAddPositionForm.resx">
+      <DependentUpon>EmplAddPositionForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="EmplViewForm.resx">
       <DependentUpon>EmplViewForm.cs</DependentUpon>
@@ -118,6 +136,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
@@ -132,6 +151,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Icons\add.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Icons\refresh.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
