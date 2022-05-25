@@ -108,6 +108,12 @@
     <Compile Include="EmplAddPositionForm.Designer.cs">
       <DependentUpon>EmplAddPositionForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="EmplEditForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="EmplEditForm.Designer.cs">
+      <DependentUpon>EmplEditForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="EmplViewForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -124,6 +130,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="EmplAddPositionForm.resx">
       <DependentUpon>EmplAddPositionForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="EmplEditForm.resx">
+      <DependentUpon>EmplEditForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="EmplViewForm.resx">
       <DependentUpon>EmplViewForm.cs</DependentUpon>
@@ -157,6 +166,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Icons\refresh.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Icons\edit.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

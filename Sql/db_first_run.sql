@@ -204,6 +204,7 @@ CREATE PROCEDURE UpdateEmployee(
     IN `newPhoneNumber` BIGINT,
     IN `newDepartment` INT,
     IN `newAddress` TEXT,
+    IN `newIsSupervisor` BOOL,
     
     OUT `result` INT
 )
@@ -232,7 +233,7 @@ BEGIN
     SET
 		`position_id` = `newPosition`,
         `department_id` = `newDepartment`,
-        `supervisor_id` = `supervisorId`	
+        `supervisor_id` = IF(`newIsSupervisor` != 0, 0, `supervisorId`)
 	WHERE
 		`employee_id` = `employeeId`;
 
@@ -277,6 +278,27 @@ BEGIN
 		(`department` IS NULL OR `employees`.`department_id` = `department`) AND
         (`supervisor` IS NULL OR `employees`.`supervisor_id` = `supervisor`)
     ORDER BY `employees`.`employee_id` ASC;
+END$$
+
+-- Create a procedure that retrieves selected employee data.
+DROP PROCEDURE IF EXISTS GetEmployee$$
+CREATE PROCEDURE GetEmployee(
+	IN `employeeId` INT
+)
+BEGIN
+	SELECT
+		`employees`.`employee_id`,
+        `namesEmployee`.`name`,
+        `namesEmployee`.`birthday`,
+        `employees`.`position_id`,
+        `namesEmployee`.`phonenumber`,
+        `employees`.`department_id`,
+        `employees`.`supervisor_id`,
+        `namesEmployee`.`address`
+	FROM `employees`
+    INNER JOIN `names` AS `namesEmployee` ON (`namesEmployee`.`name_id` = `employees`.`name_id`)
+    WHERE
+		`employees`.`employee_id` = `employeeId`;
 END$$
 
 DELIMITER ;

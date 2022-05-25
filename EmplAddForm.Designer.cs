@@ -187,6 +187,7 @@
             this.ClientSize = new System.Drawing.Size(304, 313);
             this.Controls.Add(this.ButtonAddEmployee);
             this.Controls.Add(this.GroupInfo);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "EmplAddForm";

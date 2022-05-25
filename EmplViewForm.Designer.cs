@@ -40,6 +40,7 @@
             this.ButtonRefresh = new System.Windows.Forms.Button();
             this.ButtonAddDepartment = new System.Windows.Forms.Button();
             this.ButtonAddPosition = new System.Windows.Forms.Button();
+            this.ButtonEditEmployee = new System.Windows.Forms.Button();
             this.employeesGroup.SuspendLayout();
             this.filtersGroup.SuspendLayout();
             this.SuspendLayout();
@@ -56,6 +57,7 @@
             // 
             // ListEmployees
             // 
+            this.ListEmployees.FullRowSelect = true;
             this.ListEmployees.GridLines = true;
             this.ListEmployees.HideSelection = false;
             this.ListEmployees.Location = new System.Drawing.Point(6, 19);
@@ -64,6 +66,7 @@
             this.ListEmployees.TabIndex = 0;
             this.ListEmployees.UseCompatibleStateImageBehavior = false;
             this.ListEmployees.View = System.Windows.Forms.View.Details;
+            this.ListEmployees.ItemSelectionChanged += new System.Windows.Forms.ListViewItemSelectionChangedEventHandler(this.ToggleEditAbility);
             // 
             // filtersGroup
             // 
@@ -133,7 +136,7 @@
             // 
             this.ButtonRefresh.Image = ((System.Drawing.Image)(resources.GetObject("ButtonRefresh.Image")));
             this.ButtonRefresh.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.ButtonRefresh.Location = new System.Drawing.Point(294, 28);
+            this.ButtonRefresh.Location = new System.Drawing.Point(294, 36);
             this.ButtonRefresh.Name = "ButtonRefresh";
             this.ButtonRefresh.Padding = new System.Windows.Forms.Padding(0, 0, 5, 0);
             this.ButtonRefresh.Size = new System.Drawing.Size(34, 37);
@@ -168,17 +171,32 @@
             this.ButtonAddPosition.UseVisualStyleBackColor = true;
             this.ButtonAddPosition.Click += new System.EventHandler(this.AddPositionClicked);
             // 
+            // ButtonEditEmployee
+            // 
+            this.ButtonEditEmployee.Image = global::EmployeesViewer.Properties.Resources.edit;
+            this.ButtonEditEmployee.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.ButtonEditEmployee.Location = new System.Drawing.Point(500, 16);
+            this.ButtonEditEmployee.Name = "ButtonEditEmployee";
+            this.ButtonEditEmployee.Size = new System.Drawing.Size(116, 25);
+            this.ButtonEditEmployee.TabIndex = 6;
+            this.ButtonEditEmployee.Text = "Редактировать...";
+            this.ButtonEditEmployee.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.ButtonEditEmployee.UseVisualStyleBackColor = true;
+            this.ButtonEditEmployee.Click += new System.EventHandler(this.EditEmployeeClicked);
+            // 
             // EmplViewForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(784, 421);
+            this.Controls.Add(this.ButtonEditEmployee);
             this.Controls.Add(this.ButtonAddPosition);
             this.Controls.Add(this.ButtonAddDepartment);
             this.Controls.Add(this.ButtonRefresh);
             this.Controls.Add(this.ButtonAddEmployee);
             this.Controls.Add(this.filtersGroup);
             this.Controls.Add(this.employeesGroup);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
             this.Name = "EmplViewForm";
             this.Text = "Справочник сотрудников";
@@ -203,6 +221,7 @@
         private System.Windows.Forms.Button ButtonRefresh;
         private System.Windows.Forms.Button ButtonAddDepartment;
         private System.Windows.Forms.Button ButtonAddPosition;
+        private System.Windows.Forms.Button ButtonEditEmployee;
     }
 }
 

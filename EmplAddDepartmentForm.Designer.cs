@@ -30,8 +30,8 @@
         {
             this.ButtonAddDepartment = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.label1 = new System.Windows.Forms.Label();
             this.EditTitle = new System.Windows.Forms.TextBox();
+            this.label1 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -56,6 +56,13 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Информация об отделе";
             // 
+            // EditTitle
+            // 
+            this.EditTitle.Location = new System.Drawing.Point(9, 32);
+            this.EditTitle.Name = "EditTitle";
+            this.EditTitle.Size = new System.Drawing.Size(265, 20);
+            this.EditTitle.TabIndex = 1;
+            // 
             // label1
             // 
             this.label1.AutoSize = true;
@@ -65,13 +72,6 @@
             this.label1.TabIndex = 0;
             this.label1.Text = "Название";
             // 
-            // EditTitle
-            // 
-            this.EditTitle.Location = new System.Drawing.Point(9, 32);
-            this.EditTitle.Name = "EditTitle";
-            this.EditTitle.Size = new System.Drawing.Size(265, 20);
-            this.EditTitle.TabIndex = 1;
-            // 
             // EmplAddDepartmentForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -79,6 +79,7 @@
             this.ClientSize = new System.Drawing.Size(304, 116);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.ButtonAddDepartment);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "EmplAddDepartmentForm";

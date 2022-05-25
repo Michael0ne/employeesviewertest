@@ -80,6 +80,7 @@
             this.ClientSize = new System.Drawing.Size(304, 116);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.ButtonAddPosition);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "EmplAddPositionForm";

@@ -18,6 +18,7 @@ namespace EmployeesViewer
         static public Int32? AddedEmployeeId;
         static public Int32? AddedPositionId;
         static public Int32? AddedDepartmentId;
+        static public Int32? SelectedEmployeeId;
 
         private readonly string DataBase = "catalog";
         private readonly string UserName = "root";
@@ -99,6 +100,8 @@ namespace EmployeesViewer
             Int32.TryParse(SelectDepartment.SelectedValue.ToString(), out int departmentId);
             Int32.TryParse(SelectSupervisor.SelectedValue.ToString(), out int supervisorId);
 
+            SelectedEmployeeId = -1;
+            ButtonEditEmployee.Enabled = false;
             SelectDepartment.Enabled = false;
             SelectSupervisor.Enabled = false;
             ButtonRefresh.Enabled = false;
@@ -161,10 +164,14 @@ namespace EmployeesViewer
             // Добавить к списку сотрудников наименования столбцов из аргумента columns.
             foreach (string column in columns)
             {
+                ColumnHeader columnHeader = new ColumnHeader();
+                columnHeader.Width = 60;
                 if (ColumnsNames.TryGetValue(column, out string columnValue))
-                    ListEmployees.Columns.Add(columnValue);
+                    columnHeader.Text = columnValue;
                 else
-                    ListEmployees.Columns.Add(column);
+                    columnHeader.Text = column;
+
+                ListEmployees.Columns.Add(columnHeader);
             }
 
             //  Популировать список сотрудников строками из аргумента employees.
@@ -230,6 +237,9 @@ namespace EmployeesViewer
 
         private void EmplViewForm_Load(object sender, EventArgs e)
         {
+            ButtonEditEmployee.Enabled = false;
+            SelectedEmployeeId = -1;
+
             LoadData();
             LoadEmployees();
         }
@@ -242,6 +252,32 @@ namespace EmployeesViewer
         private void DepartmentFilterChanged(object sender, EventArgs e)
         {
             RefreshData();
+        }
+
+        private void ToggleEditAbility(object sender, ListViewItemSelectionChangedEventArgs e)
+        {
+            if (ListEmployees.SelectedItems.Count < 1)
+            {
+                SelectedEmployeeId = -1;
+                ButtonEditEmployee.Enabled = false;
+            }
+            else
+            {
+                SelectedEmployeeId = Int32.Parse(ListEmployees.SelectedItems[0].Text);
+                ButtonEditEmployee.Enabled = true;
+            }
+        }
+
+        private void EditEmployeeClicked(object sender, EventArgs e)
+        {
+            using (EmplEditForm editForm = new EmplEditForm())
+            {
+                DialogResult editFormResult = editForm.ShowDialog();
+                if (editFormResult != DialogResult.OK)
+                    return;
+
+                RefreshData();
+            }
         }
     }
 }

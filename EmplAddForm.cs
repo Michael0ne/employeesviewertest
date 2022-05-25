@@ -157,13 +157,13 @@ namespace EmployeesViewer
             dbrequest.AddParameter("address", DBManager.eRequestParameterType.ARGUMENT_INPUT, EditEmployeePostAddress.Text, MySql.Data.MySqlClient.MySqlDbType.Text);
             dbrequest.AddParameter(null, DBManager.eRequestParameterType.ARGUMENT_OUTPUT, null, MySql.Data.MySqlClient.MySqlDbType.Int32);
 
-            if (!dbrequest.Execute(out object employeeId))
+            if (!dbrequest.Execute(out object result))
             {
                 MessageBox.Show("При добавлении возникла ошибка! Ошибка:\n" + dbrequest.GetLastError());
                 return;
             }
 
-            Int32.TryParse(employeeId.ToString(), out Int32 responseCode);
+            Int32.TryParse(result.ToString(), out Int32 responseCode);
             if (responseCode < 0)
                 MessageBox.Show("При добавлении возникла ошибка:\n" + ResponseCodes[responseCode]);
             else
