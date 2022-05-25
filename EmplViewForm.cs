@@ -101,11 +101,13 @@ namespace EmployeesViewer
         private void PropagatePositionsList(Dictionary<int, List<object>> positions)
         {
             PositionsList = new Dictionary<int, string>();
-
             PositionsList.Add(-1, "<не выбрано>");
 
-            foreach (KeyValuePair<int, List<object>> position in positions)
-                PositionsList.Add((int)position.Value[0], (string)position.Value[1]);
+            if (positions != null)
+            {
+                foreach (KeyValuePair<int, List<object>> position in positions)
+                    PositionsList.Add((int)position.Value[0], (string)position.Value[1]);
+            }
 
             SelectDepartment.DataSource = new BindingSource(PositionsList, null);
             SelectDepartment.DisplayMember = "Value";
@@ -115,11 +117,13 @@ namespace EmployeesViewer
         private void PropagateSupervisorsList(Dictionary<int, List<object>> supervisors)
         {
             SupervisorsList = new Dictionary<int, string>();
-
             SupervisorsList.Add(-1, "<не выбрано>");
 
-            foreach (KeyValuePair<int, List<object>> supervisor in supervisors)
-                SupervisorsList.Add((int)supervisor.Value[0], (string)supervisor.Value[1]);
+            if (supervisors != null)
+            {
+                foreach (KeyValuePair<int, List<object>> supervisor in supervisors)
+                    SupervisorsList.Add((int)supervisor.Value[0], (string)supervisor.Value[1]);
+            }
 
             SelectSupervisor.DataSource = new BindingSource(SupervisorsList, null);
             SelectSupervisor.DisplayMember = "Value";
@@ -165,8 +169,8 @@ namespace EmployeesViewer
 
             if (requestPositions.GetResultsRows() == null)
                 MessageBox.Show("Внимание!\nНе найдено ни одной должности.");
-            else
-                PropagatePositionsList(requestPositions.GetResultsRows());
+
+            PropagatePositionsList(requestPositions.GetResultsRows());
 
             DBManager.Request requestSupervisors = new DBManager.Request("GetSupervisors");
             if (!requestSupervisors.Execute() && requestSupervisors.GetLastError() != null)
@@ -177,8 +181,8 @@ namespace EmployeesViewer
 
             if (requestSupervisors.GetResultsRows() == null)
                 MessageBox.Show("Внимание!\nНе найдено ни одного руководителя.");
-            else
-                PropagateSupervisorsList(requestSupervisors.GetResultsRows());
+
+            PropagateSupervisorsList(requestSupervisors.GetResultsRows());
         }
 
         private void LoadEmployees(int departmentId = -1, int supervisorId = -1)
