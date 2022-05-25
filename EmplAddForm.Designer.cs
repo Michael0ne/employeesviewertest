@@ -42,11 +42,13 @@
             this.EditEmployeeName = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.ButtonAddEmployee = new System.Windows.Forms.Button();
+            this.CheckIsSupervisor = new System.Windows.Forms.CheckBox();
             this.GroupInfo.SuspendLayout();
             this.SuspendLayout();
             // 
             // GroupInfo
             // 
+            this.GroupInfo.Controls.Add(this.CheckIsSupervisor);
             this.GroupInfo.Controls.Add(this.EditEmployeePostAddress);
             this.GroupInfo.Controls.Add(this.label6);
             this.GroupInfo.Controls.Add(this.SelectEmployeeDepartment);
@@ -61,14 +63,14 @@
             this.GroupInfo.Controls.Add(this.label1);
             this.GroupInfo.Location = new System.Drawing.Point(12, 12);
             this.GroupInfo.Name = "GroupInfo";
-            this.GroupInfo.Size = new System.Drawing.Size(280, 257);
+            this.GroupInfo.Size = new System.Drawing.Size(280, 283);
             this.GroupInfo.TabIndex = 0;
             this.GroupInfo.TabStop = false;
             this.GroupInfo.Text = "Информация о сотруднике";
             // 
             // EditEmployeePostAddress
             // 
-            this.EditEmployeePostAddress.Location = new System.Drawing.Point(9, 229);
+            this.EditEmployeePostAddress.Location = new System.Drawing.Point(9, 253);
             this.EditEmployeePostAddress.MaxLength = 1024;
             this.EditEmployeePostAddress.Name = "EditEmployeePostAddress";
             this.EditEmployeePostAddress.Size = new System.Drawing.Size(265, 20);
@@ -77,7 +79,7 @@
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(6, 213);
+            this.label6.Location = new System.Drawing.Point(6, 237);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(90, 13);
             this.label6.TabIndex = 10;
@@ -172,7 +174,7 @@
             // 
             // ButtonAddEmployee
             // 
-            this.ButtonAddEmployee.Location = new System.Drawing.Point(12, 276);
+            this.ButtonAddEmployee.Location = new System.Drawing.Point(12, 301);
             this.ButtonAddEmployee.Name = "ButtonAddEmployee";
             this.ButtonAddEmployee.Size = new System.Drawing.Size(110, 25);
             this.ButtonAddEmployee.TabIndex = 1;
@@ -180,11 +182,21 @@
             this.ButtonAddEmployee.UseVisualStyleBackColor = true;
             this.ButtonAddEmployee.Click += new System.EventHandler(this.EmployeeAddClicked);
             // 
+            // CheckIsSupervisor
+            // 
+            this.CheckIsSupervisor.AutoSize = true;
+            this.CheckIsSupervisor.Location = new System.Drawing.Point(10, 216);
+            this.CheckIsSupervisor.Name = "CheckIsSupervisor";
+            this.CheckIsSupervisor.Size = new System.Drawing.Size(119, 17);
+            this.CheckIsSupervisor.TabIndex = 14;
+            this.CheckIsSupervisor.Text = "Начальник отдела";
+            this.CheckIsSupervisor.UseVisualStyleBackColor = true;
+            // 
             // EmplAddForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(304, 313);
+            this.ClientSize = new System.Drawing.Size(304, 334);
             this.Controls.Add(this.ButtonAddEmployee);
             this.Controls.Add(this.GroupInfo);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
@@ -217,5 +229,6 @@
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.TextBox EditEmployeePostAddress;
         private System.Windows.Forms.Button ButtonAddEmployee;
+        private System.Windows.Forms.CheckBox CheckIsSupervisor;
     }
 }

@@ -35,6 +35,63 @@ namespace EmployeesViewer
 
         private void EditInfoClicked(object sender, EventArgs e)
         {
+            string errorString = null;
+            byte errorsFound = 0;
+
+            if (String.IsNullOrEmpty(EditEmployeeName.Text))
+            {
+                errorString += "Поле \"ФИО\" должно быть заполнено.\n";
+                errorsFound++;
+            }
+
+            if (String.IsNullOrEmpty(DateEmployee.Text))
+            {
+                errorString += "Поле \"Дата рождения\" должно быть заполнено.\n";
+                errorsFound++;
+            }
+
+            if (CheckAgeRestrictions)
+            {
+                DateTime parsedDate = DateEmployee.Value;
+                DateTime currentDate = DateTime.Now;
+                if (currentDate.Subtract(parsedDate).TotalDays <= (365 * MinimumAllowedAge) ||
+                    currentDate.Subtract(parsedDate).TotalDays >= (365 * MaximumAllowedAge))
+                {
+                    errorString += "Указан недопустимый возраст сотрудника.\n";
+                    errorsFound++;
+                }
+            }
+
+            if (SelectEmployeePosition.Text == null || SelectEmployeePosition.SelectedIndex < 0)
+            {
+                errorString += "Поле \"Должность\" должно быть заполнено.\n";
+                errorsFound++;
+            }
+
+            if (String.IsNullOrEmpty(EditEmployeePhoneNumber.Text))
+            {
+                errorString += "Поле \"Номер телефона\" должно быть заполнено.\n";
+                errorsFound++;
+            }
+
+            if (SelectEmployeeDepartment.Text == null || SelectEmployeeDepartment.SelectedIndex < 0)
+            {
+                errorString += "Поле \"Отдел\" должно быть заполнено.\n";
+                errorsFound++;
+            }
+
+            if (String.IsNullOrEmpty(EditEmployeePostAddress.Text))
+            {
+                errorString += "Поле \"Почтовый адрес\" должно быть заполнено.\n";
+                errorsFound++;
+            }
+
+            if (CheckErrors && errorsFound > 0)
+            {
+                MessageBox.Show(errorString);
+                return;
+            }
+
             DBManager.Request requestApplyData = new DBManager.Request("UpdateEmployee");
             requestApplyData.AddParameter("employeeId", DBManager.eRequestParameterType.ARGUMENT_INPUT, EmployeeDatabaseId, MySql.Data.MySqlClient.MySqlDbType.Int32);
             requestApplyData.AddParameter("newName", DBManager.eRequestParameterType.ARGUMENT_INPUT, EditEmployeeName.Text, MySql.Data.MySqlClient.MySqlDbType.TinyText);
@@ -164,7 +221,7 @@ namespace EmployeesViewer
 
             Int32.TryParse(result.ToString(), out int responseCode);
             if (responseCode < 0)
-                MessageBox.Show("При обновлении возникла ошибка:\n" + ResponseCodes[responseCode]);
+                MessageBox.Show("При удалении возникла ошибка:\n" + ResponseCodes[responseCode]);
             else
                 MessageBox.Show("Сотрудник удалён успешно!");
 

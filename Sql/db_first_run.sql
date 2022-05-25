@@ -60,7 +60,8 @@ CREATE FUNCTION AddEmployeeFunc(
     `position` INT,
     `phonenumber` BIGINT,
     `department` INT,
-    `address` TEXT
+    `address` TEXT,
+    `IsSupervisor` BOOL
 )
 RETURNS INT
 BEGIN
@@ -81,7 +82,11 @@ BEGIN
 	END IF;
     
     -- Get supervisor for selected department.
-    SELECT `employee_id` INTO `supervisorId` FROM `employees` WHERE `department_id` = `department` AND `supervisor_id` = NULL ORDER BY `employee_id` DESC LIMIT 1;
+    IF `IsSupervisor` = TRUE THEN
+		SET `supervisorId` = 0;
+	ELSE
+		SELECT `employee_id` INTO `supervisorId` FROM `employees` WHERE `department_id` = `department` AND ISNULL(`supervisor_id`) ORDER BY `employee_id` DESC LIMIT 1;
+	END IF;
     
     -- Employees table depends on data that should exist in other tables. Names table goes first.
     SELECT `name_id` INTO `nameIdOld` FROM `names` ORDER BY `name_id` DESC LIMIT 1;
@@ -147,11 +152,12 @@ CREATE PROCEDURE AddEmployee(
     IN `phonenumber` BIGINT,
     IN `department` INT,
     IN `address` TEXT,
+    IN `IsSupervisor` BOOL,
 
 	OUT `result` INT
 )
 BEGIN
-	SET `result` = AddEmployeeFunc(`name`, `birthday`, `position`, `phonenumber`, `department`, `address`);
+	SET `result` = AddEmployeeFunc(`name`, `birthday`, `position`, `phonenumber`, `department`, `address`, `IsSupervisor`);
 END$$
 
 -- Create a procedure that can retrieve all available positions.

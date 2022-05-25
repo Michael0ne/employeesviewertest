@@ -155,6 +155,7 @@ namespace EmployeesViewer
             dbrequest.AddParameter("phonenumber", DBManager.eRequestParameterType.ARGUMENT_INPUT, EditEmployeePhoneNumber.Text, MySql.Data.MySqlClient.MySqlDbType.Int64);
             dbrequest.AddParameter("department", DBManager.eRequestParameterType.ARGUMENT_INPUT, (int)SelectEmployeeDepartment.SelectedValue, MySql.Data.MySqlClient.MySqlDbType.Int32);
             dbrequest.AddParameter("address", DBManager.eRequestParameterType.ARGUMENT_INPUT, EditEmployeePostAddress.Text, MySql.Data.MySqlClient.MySqlDbType.Text);
+            dbrequest.AddParameter("IsSupervisor", DBManager.eRequestParameterType.ARGUMENT_INPUT, CheckIsSupervisor.Checked ? 1 : 0, MySql.Data.MySqlClient.MySqlDbType.Byte);
             dbrequest.AddParameter(null, DBManager.eRequestParameterType.ARGUMENT_OUTPUT, null, MySql.Data.MySqlClient.MySqlDbType.Int32);
 
             if (!dbrequest.Execute(out object result))
