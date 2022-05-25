@@ -123,8 +123,6 @@ namespace EmployeesViewer
             Left = Screen.PrimaryScreen.WorkingArea.Width / 2 - (Width / 2);
             Top = Screen.PrimaryScreen.WorkingArea.Height / 2 - (Height / 2);
 
-            ButtonSaveInfo.Left = Width / 2 - (ButtonSaveInfo.Width / 2);
-
             DBManager.Request requestPositions = new DBManager.Request("GetPositions");
             if (!requestPositions.Execute() && requestPositions.GetLastError() != null)
             {
@@ -150,6 +148,28 @@ namespace EmployeesViewer
                 PropagateDepartmentsList(requestDepartments.GetResultsRows());
 
             LoadData();
+        }
+
+        private void DeleteClicked(object sender, EventArgs e)
+        {
+            DBManager.Request requestRemoveData = new DBManager.Request("RemoveEmployee");
+            requestRemoveData.AddParameter("employeeId", DBManager.eRequestParameterType.ARGUMENT_INPUT, EmployeeDatabaseId, MySql.Data.MySqlClient.MySqlDbType.Int32);
+            requestRemoveData.AddParameter(null, DBManager.eRequestParameterType.ARGUMENT_OUTPUT, null, MySql.Data.MySqlClient.MySqlDbType.Int32);
+
+            if (!requestRemoveData.Execute(out object result))
+            {
+                MessageBox.Show("При удалении возникла ошибка! Ошибка:\n" + requestRemoveData.GetLastError());
+                return;
+            }
+
+            Int32.TryParse(result.ToString(), out int responseCode);
+            if (responseCode < 0)
+                MessageBox.Show("При обновлении возникла ошибка:\n" + ResponseCodes[responseCode]);
+            else
+                MessageBox.Show("Сотрудник удалён успешно!");
+
+            EmplViewForm.SelectedEmployeeId = -1;
+            DialogResult = DialogResult.OK;
         }
     }
 }

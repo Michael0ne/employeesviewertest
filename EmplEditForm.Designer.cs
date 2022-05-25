@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.S = new System.Windows.Forms.GroupBox();
             this.CheckIsSupervisor = new System.Windows.Forms.CheckBox();
             this.EditEmployeePostAddress = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
@@ -43,30 +43,31 @@
             this.EditEmployeeName = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.ButtonSaveInfo = new System.Windows.Forms.Button();
-            this.groupBox1.SuspendLayout();
+            this.ButtonRemoveEmployee = new System.Windows.Forms.Button();
+            this.S.SuspendLayout();
             this.SuspendLayout();
             // 
-            // groupBox1
+            // S
             // 
-            this.groupBox1.Controls.Add(this.CheckIsSupervisor);
-            this.groupBox1.Controls.Add(this.EditEmployeePostAddress);
-            this.groupBox1.Controls.Add(this.label6);
-            this.groupBox1.Controls.Add(this.SelectEmployeeDepartment);
-            this.groupBox1.Controls.Add(this.label5);
-            this.groupBox1.Controls.Add(this.EditEmployeePhoneNumber);
-            this.groupBox1.Controls.Add(this.label4);
-            this.groupBox1.Controls.Add(this.SelectEmployeePosition);
-            this.groupBox1.Controls.Add(this.label3);
-            this.groupBox1.Controls.Add(this.DateEmployee);
-            this.groupBox1.Controls.Add(this.label2);
-            this.groupBox1.Controls.Add(this.EditEmployeeName);
-            this.groupBox1.Controls.Add(this.label1);
-            this.groupBox1.Location = new System.Drawing.Point(12, 12);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(280, 283);
-            this.groupBox1.TabIndex = 0;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Информация о сотруднике";
+            this.S.Controls.Add(this.CheckIsSupervisor);
+            this.S.Controls.Add(this.EditEmployeePostAddress);
+            this.S.Controls.Add(this.label6);
+            this.S.Controls.Add(this.SelectEmployeeDepartment);
+            this.S.Controls.Add(this.label5);
+            this.S.Controls.Add(this.EditEmployeePhoneNumber);
+            this.S.Controls.Add(this.label4);
+            this.S.Controls.Add(this.SelectEmployeePosition);
+            this.S.Controls.Add(this.label3);
+            this.S.Controls.Add(this.DateEmployee);
+            this.S.Controls.Add(this.label2);
+            this.S.Controls.Add(this.EditEmployeeName);
+            this.S.Controls.Add(this.label1);
+            this.S.Location = new System.Drawing.Point(12, 12);
+            this.S.Name = "S";
+            this.S.Size = new System.Drawing.Size(280, 283);
+            this.S.TabIndex = 0;
+            this.S.TabStop = false;
+            this.S.Text = "Информация о сотруднике";
             // 
             // CheckIsSupervisor
             // 
@@ -185,19 +186,30 @@
             // 
             this.ButtonSaveInfo.Location = new System.Drawing.Point(12, 301);
             this.ButtonSaveInfo.Name = "ButtonSaveInfo";
-            this.ButtonSaveInfo.Size = new System.Drawing.Size(110, 25);
+            this.ButtonSaveInfo.Size = new System.Drawing.Size(90, 25);
             this.ButtonSaveInfo.TabIndex = 1;
             this.ButtonSaveInfo.Text = "Сохранить";
             this.ButtonSaveInfo.UseVisualStyleBackColor = true;
             this.ButtonSaveInfo.Click += new System.EventHandler(this.EditInfoClicked);
+            // 
+            // ButtonRemoveEmployee
+            // 
+            this.ButtonRemoveEmployee.Location = new System.Drawing.Point(202, 301);
+            this.ButtonRemoveEmployee.Name = "ButtonRemoveEmployee";
+            this.ButtonRemoveEmployee.Size = new System.Drawing.Size(90, 25);
+            this.ButtonRemoveEmployee.TabIndex = 2;
+            this.ButtonRemoveEmployee.Text = "Удалить";
+            this.ButtonRemoveEmployee.UseVisualStyleBackColor = true;
+            this.ButtonRemoveEmployee.Click += new System.EventHandler(this.DeleteClicked);
             // 
             // EmplEditForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(304, 337);
+            this.Controls.Add(this.ButtonRemoveEmployee);
             this.Controls.Add(this.ButtonSaveInfo);
-            this.Controls.Add(this.groupBox1);
+            this.Controls.Add(this.S);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
@@ -207,15 +219,15 @@
             this.Text = "Редактировать сотрудника";
             this.TopMost = true;
             this.Shown += new System.EventHandler(this.FormShown);
-            this.groupBox1.ResumeLayout(false);
-            this.groupBox1.PerformLayout();
+            this.S.ResumeLayout(false);
+            this.S.PerformLayout();
             this.ResumeLayout(false);
 
         }
 
         #endregion
 
-        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.GroupBox S;
         private System.Windows.Forms.Button ButtonSaveInfo;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox EditEmployeeName;
@@ -230,5 +242,6 @@
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.TextBox EditEmployeePostAddress;
         private System.Windows.Forms.CheckBox CheckIsSupervisor;
+        private System.Windows.Forms.Button ButtonRemoveEmployee;
     }
 }

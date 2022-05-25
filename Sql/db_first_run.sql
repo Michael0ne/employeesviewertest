@@ -240,6 +240,29 @@ BEGIN
 	SET `result` = 1;
 END$$
 
+-- Create a procedure that removes selected employee.
+DROP PROCEDURE IF EXISTS RemoveEmployee$$
+CREATE PROCEDURE RemoveEmployee(
+	IN `employeeId` INT,
+
+	OUT `result` INT
+)
+BEGIN
+	DECLARE `nameId` INT;
+
+	SELECT `name_id` INTO `nameId` FROM `names` WHERE `name_id` = (SELECT `name_id` FROM `employees` WHERE `employee_id` = `employeeId`);
+
+    UPDATE `employees` SET
+		`supervisor_id` = 0
+	WHERE
+		`employees`.`supervisor_id` = `employeeId`;
+
+    DELETE FROM `employees` WHERE `employee_id` = `employeeId`;
+    DELETE FROM `names` WHERE `names`.`name_id` = `nameId`;
+    
+    SET `result` = 1;
+END$$
+
 -- Create a procedure that can retrieve all employees.
 -- If no filter is specified, then plain list is returned.
 DROP PROCEDURE IF EXISTS GetEmployees$$
